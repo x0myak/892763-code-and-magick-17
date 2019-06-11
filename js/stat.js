@@ -7,10 +7,11 @@ var CLOUD_Y = 10;
 var GAP = 10;
 var COLUMN_GAP = 50;
 var COLUMN_WIDTH = 40;
-var TEXT_LEVEL = COLUMN_GAP + GAP * 4;
-var COLUMN_HEIGHT = 150;
-var COLUMN_X = CLOUD_X + GAP;
-var COLUMN_Y = COLUMN_GAP + GAP * 6;
+var textLevel = COLUMN_GAP + GAP * 4;
+var MAX_COLUMN_HEIGHT = 150;
+var columnX = CLOUD_X + GAP;
+var columnY = COLUMN_GAP + GAP * 6;
+TEXT_Y = 50;
 
 
 var renderCloud = function(ctx, x, y, color) {
@@ -18,16 +19,16 @@ var renderCloud = function(ctx, x, y, color) {
   ctx.fillRect(x, y, WINDOW_WIDTH, WINDOW_HEIGHT);
 };
 
-var getMinElement = function(arr) {
-  var minElement = arr[0];
+var getMaxElement = function(arr) {
+  var maxElement = arr[0];
 
   for (var i = 0; i < arr.length; i++) {
-    if (arr[i] < minElement) {
-      minElement = arr[i];
+    if (arr[i] > maxElement) {
+      maxElement = arr[i];
     }
   }
 
-  return minElement;
+  return maxElement;
 };
 
 var times = [1000, 2000, 4300, 2500];
@@ -38,17 +39,15 @@ window.renderStatistics = function(ctx, names, times) {
 
   ctx.fillStyle = 'blue';
   ctx.font = "16px  PT Mono";
-  ctx.fillText('Ура вы победили!', COLUMN_X, COLUMN_GAP);
-  ctx.fillText('Список результатов:', CLOUD_X + GAP, COLUMN_GAP + GAP * 2)
+  ctx.fillText('Ура вы победили!', columnX, TEXT_Y);
+  ctx.fillText('Список результатов:', columnX + GAP, COLUMN_GAP + GAP * 2)
 
-  var minTime = getMinElement(times);
-
-  var columnHeight = 150 * (minTime / times[i])
+  var maxTime = getMaxElement(times);
 
   // var names = ['Вы', 'Иван', 'Юлия', 'bb'];
 
   for (var i = 0; i < names.length; i++) {
-    ctx.fillText(names[i], COLUMN_X + (COLUMN_WIDTH + COLUMN_GAP) * i, TEXT_LEVEL);
-    ctx.fillRect(COLUMN_X + (COLUMN_WIDTH + COLUMN_GAP) * i, COLUMN_Y, COLUMN_WIDTH, columnHeight;
-  }
+    ctx.fillText(names[i], columnX + (COLUMN_WIDTH + COLUMN_GAP) * i, textLevel);
+    ctx.fillRect(columnX + (COLUMN_WIDTH + COLUMN_GAP) * i, columnY, COLUMN_WIDTH, MAX_COLUMN_HEIGHT * (maxTime / times[i]));
+  };
 };
